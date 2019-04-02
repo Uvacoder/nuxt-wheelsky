@@ -1,72 +1,210 @@
 <template>
-  <section class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        nuxt-wheelsky
-      </h1>
-      <h2 class="subtitle">
-        wheelsky but w/ some server side rendering...
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
-          >Documentation</a
-        >
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-          >GitHub</a
-        >
+  <div>
+    <div v-if="firstPhase" class="main-content">
+      <wheelsky
+        ref="wheel"
+        :highlighted-flavor="highlightedFlavor"
+        :available-flavors="activeFlavorArray"
+        class="wheel-block"
+        @update-flavor="updateHighlightedFlavor"
+        @reset-wheel="resetWheel"
+      ></wheelsky>
+      <div class="right-aside-block">
+        <flavor-details
+          class="details-block"
+          :highlighted-flavor="highlightedFlavor"
+          :depth-tier="depthTier"
+          @dig-flavor="flavorIsChosen"
+          @reset-depth="selectFlavor"
+        ></flavor-details>
+        <chosen-flavors :selected-flavors="selectedFlavors"></chosen-flavors>
       </div>
     </div>
-  </section>
+    <div v-if="!firstPhase">
+      <user-form></user-form>
+    </div>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+// import { Draggable } from 'gsap/Draggable'
+import { Draggable } from 'gsap/all'
+import Wheelsky from '@/components/Wheelsky.vue'
+import FlavorDetails from '@/components/FlavorDetails.vue'
+import ChosenFlavors from '@/components/ChosenFlavors.vue'
+import UserForm from '@/components/UserForm.vue'
+import whiskyFlavors from '@/assets/data/whiskyFlavors.json'
 
 export default {
+  name: 'App',
   components: {
-    Logo
+    Wheelsky,
+    FlavorDetails,
+    ChosenFlavors,
+    UserForm
+  },
+  data() {
+    return {
+      allFlavors: [
+        {
+          name: 'banana',
+          color: '#1ad1e5'
+        },
+        {
+          name: 'strawberry',
+          color: '#e2071c'
+        },
+        {
+          name: 'cherry',
+          color: '#fb1'
+        },
+        {
+          name: 'pineapple',
+          color: '#b000b5'
+        },
+        {
+          name: 'watermelon',
+          color: '#fa7a55'
+        }
+      ],
+      all: whiskyFlavors,
+      highlightedFlavor: undefined,
+      selectedFlavors: [],
+      previouslySelectedFlavor: undefined,
+      depthTier: 1,
+      firstPhase: false,
+      activeFlavorArray: [
+        {
+          name: 'Doux'
+        },
+        {
+          name: 'Floral'
+        },
+        {
+          name: 'Fruité'
+        },
+        {
+          name: 'Herbacé'
+        },
+        {
+          name: 'Marin'
+        },
+        {
+          name: 'Minéral'
+        },
+        {
+          name: 'Huileux'
+        },
+        {
+          name: 'Fumé'
+        },
+        {
+          name: 'Soufré'
+        },
+        {
+          name: 'Vineux'
+        },
+        {
+          name: 'Boisé'
+        },
+        {
+          name: 'Céréale'
+        }
+      ]
+    }
+  },
+  mounted() {
+    if (process.browser) {
+      // window.onbeforeunload = function() {
+      // return "Êtes-vous sûr de vouloir recharger la page ?";
+      // }
+    }
+  },
+  methods: {
+    updateHighlightedFlavor(e) {
+      this.highlightedFlavor = e.name
+    },
+    selectFlavor(e) {
+      this.selectedFlavors.push(e)
+      this.resetWheel()
+    },
+    flavorIsChosen(e) {
+      this.activeFlavorArray = []
+      let tempArray = []
+      this.depthTier += 1
+      if (this.depthTier === 2) {
+        const elementsTier2 = this.all[0].children.find(el => el.name === e)
+          .children
+        for (let i = 0; i < elementsTier2.length; i++) {
+          console.log(elementsTier2[i])
+          tempArray.push(elementsTier2[i])
+          //!todo need to filter the N+1 to avoid printing parents w/ no children...
+        }
+        console.log(elementsTier2)
+        this.previouslySelectedFlavor = e
+      } else if (this.depthTier === 3) {
+        const elementsTier2 = this.all[0].children.find(
+          el => el.name === this.previouslySelectedFlavor
+        ).children
+        const elementsTier3 = elementsTier2.find(el2 => el2.name === e).children
+        for (let i = 0; i < elementsTier3.length; i++) {
+          tempArray.push(elementsTier3[i])
+        }
+      }
+      tempArray = tempArray.filter(
+        x => this.selectedFlavors.indexOf(x.name) < 0
+      )
+      this.activeFlavorArray = tempArray
+      if (this.activeFlavorArray.length === 1) {
+        this.activeFlavorArray.push(this.activeFlavorArray[0])
+      }
+      if (this.activeFlavorArray.length === 0) {
+        this.resetWheel()
+        //!todo OMFG, what an MLG pro. kill me.
+      }
+      this.$refs.wheel.checkFlavor(Draggable.get('#wheel'))
+    },
+    resetWheel() {
+      this.depthTier = 1
+      this.activeFlavorArray = [
+        {
+          name: 'Doux'
+        },
+        {
+          name: 'Floral'
+        },
+        {
+          name: 'Fruité'
+        },
+        {
+          name: 'Herbacé'
+        },
+        {
+          name: 'Marin'
+        },
+        {
+          name: 'Minéral'
+        },
+        {
+          name: 'Huileux'
+        },
+        {
+          name: 'Fumé'
+        },
+        {
+          name: 'Soufré'
+        },
+        {
+          name: 'Vineux'
+        },
+        {
+          name: 'Boisé'
+        },
+        {
+          name: 'Céréale'
+        }
+      ]
+    }
   }
 }
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

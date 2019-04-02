@@ -19,5 +19,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    "spaced-comment": 0,
+    "no-console": 1,
+    "eqeqeq": 1
   }
 }
