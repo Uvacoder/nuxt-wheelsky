@@ -73,8 +73,9 @@
 </template>
 
 <script>
-// import { Draggable } from 'gsap/Draggable'
-import { Draggable } from 'gsap/all'
+let Draggable
+// import { Draggable } from 'gsap/all'
+// import { Draggable } from 'gsap'
 
 export default {
   props: {
@@ -119,6 +120,8 @@ export default {
   },
   mounted() {
     if (process.browser) {
+      Draggable = require('gsap/Draggable')
+      console.log(Draggable)
       if (this.availableFlavors.length === 1) {
         console.log('we should GSAP lock the rotation here !')
       } else {
@@ -142,7 +145,7 @@ export default {
       })
     }
   },
-  //todo need to export that somewhere, too messy atm
+  // todo need to export that somewhere, too messy atm
   methods: {
     backButtonClick() {
       this.$emit('reset-wheel')

@@ -28,15 +28,15 @@ export default {
       } else {
         return 'Choisir cette saveur'
       }
-    },
-    methods: {
-      digFlavor() {
-        if (this.depthTier === 3) {
-          console.log('We have a chosen flavor !')
-          this.$emit('reset-depth', this.highlightedFlavor)
-        } else {
-          this.$emit('dig-flavor', this.highlightedFlavor)
-        }
+    }
+  },
+  methods: {
+    digFlavor() {
+      if (this.depthTier === 3) {
+        console.log('We have a chosen flavor !')
+        this.$emit('reset-depth', this.highlightedFlavor)
+      } else {
+        this.$emit('dig-flavor', this.highlightedFlavor)
       }
     }
   }

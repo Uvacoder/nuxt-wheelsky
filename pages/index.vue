@@ -4,8 +4,8 @@
       <wheelsky
         ref="wheel"
         :highlighted-flavor="highlightedFlavor"
-        :available-flavors="activeFlavorArray"
         class="wheel-block"
+        :available-flavors="activeFlavorArray"
         @update-flavor="updateHighlightedFlavor"
         @reset-wheel="resetWheel"
       ></wheelsky>
@@ -28,12 +28,12 @@
 
 <script>
 // import { Draggable } from 'gsap/Draggable'
-import { Draggable } from 'gsap/all'
 import Wheelsky from '@/components/Wheelsky.vue'
 import FlavorDetails from '@/components/FlavorDetails.vue'
 import ChosenFlavors from '@/components/ChosenFlavors.vue'
 import UserForm from '@/components/UserForm.vue'
 import whiskyFlavors from '@/assets/data/whiskyFlavors.json'
+let Draggable
 
 export default {
   name: 'App',
@@ -72,7 +72,7 @@ export default {
       selectedFlavors: [],
       previouslySelectedFlavor: undefined,
       depthTier: 1,
-      firstPhase: false,
+      firstPhase: true,
       activeFlavorArray: [
         {
           name: 'Doux'
@@ -115,6 +115,7 @@ export default {
   },
   mounted() {
     if (process.browser) {
+      Draggable = require('gsap/Draggable')
       // window.onbeforeunload = function() {
       // return "Êtes-vous sûr de vouloir recharger la page ?";
       // }
