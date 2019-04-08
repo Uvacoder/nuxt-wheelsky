@@ -15,7 +15,7 @@
   "dependencies": {
     "cross-env": "^5.2.0",
     "gsap": "^2.1.2",
-    "nuxt": "^2.5.1"
+    "nuxt": "^2.6.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
