@@ -73,9 +73,7 @@
 </template>
 
 <script>
-let Draggable
-// import { Draggable } from 'gsap/all'
-// import { Draggable } from 'gsap'
+let draggable
 
 export default {
   props: {
@@ -115,18 +113,18 @@ export default {
   watch: {
     availableFlavors(newValue, oldValue) {
       // console.log("Update chosen flavor after a depth dive");
-      this.checkFlavor(Draggable.get('#wheel'))
+      draggable = require('gsap/Draggable')
+      this.checkFlavor(draggable.get('#wheel'))
     }
   },
   mounted() {
     if (process.browser) {
-      Draggable = require('gsap/Draggable')
-      console.log(Draggable)
       if (this.availableFlavors.length === 1) {
         console.log('we should GSAP lock the rotation here !')
       } else {
       }
       const vueInstance = this
+      const { Draggable } = require('gsap/Draggable')
       Draggable.create('#wheel', {
         type: 'rotation',
         snap: function(endValue) {

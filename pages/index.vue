@@ -27,13 +27,12 @@
 </template>
 
 <script>
-// import { Draggable } from 'gsap/Draggable'
 import Wheelsky from '@/components/Wheelsky.vue'
 import FlavorDetails from '@/components/FlavorDetails.vue'
 import ChosenFlavors from '@/components/ChosenFlavors.vue'
 import UserForm from '@/components/UserForm.vue'
 import whiskyFlavors from '@/assets/data/whiskyFlavors.json'
-let Draggable
+let draggable
 
 export default {
   name: 'App',
@@ -115,10 +114,10 @@ export default {
   },
   mounted() {
     if (process.browser) {
-      Draggable = require('gsap/Draggable')
-      // window.onbeforeunload = function() {
-      // return "Êtes-vous sûr de vouloir recharger la page ?";
-      // }
+      draggable = require('gsap/Draggable')
+      window.onbeforeunload = function() {
+        // return 'Êtes-vous sûr de vouloir recharger la page ?'
+      }
     }
   },
   methods: {
@@ -163,7 +162,7 @@ export default {
         this.resetWheel()
         //!todo OMFG, what an MLG pro. kill me.
       }
-      this.$refs.wheel.checkFlavor(Draggable.get('#wheel'))
+      this.$refs.wheel.checkFlavor(draggable.get('#wheel'))
     },
     resetWheel() {
       this.depthTier = 1
