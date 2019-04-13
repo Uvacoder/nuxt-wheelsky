@@ -12,7 +12,6 @@
       <div class="w-full md:w-1/2 px-3 mb-5 md:mb-0">
         <label
           for="user-email"
-          name="user-email"
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
           >Quelle est votre adresse mail ?</label
         >
@@ -21,6 +20,7 @@
         <input
           id="user-email"
           v-model="userEmail"
+          name="user-email"
           class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-purple"
           type="email"
           placeholder="nom.prenom@gmail.com"
@@ -33,13 +33,13 @@
       <div class="w-full md:w-1/2 px-3 mb-5 md:mb-0">
         <label
           for="whisky-distillery"
-          name="whisky-distillery"
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
           >De quelle distillerie est l'alcool ?</label
         >
         <input
           id="whisky-distillery"
           v-model="whiskyDistillery"
+          name="whisky-distillery"
           class="appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-purple"
           type="text"
           placeholder="Birmingham"
@@ -49,13 +49,13 @@
       <div class="w-full md:w-1/2 px-3">
         <label
           for="whisky-name"
-          name="whisky-name"
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
           >Quel est le nom du breuvage ?</label
         >
         <input
           id="whisky-name"
           v-model="whiskyName"
+          name="whisky-name"
           class="appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-purple"
           type="text"
           placeholder="Hakushu"
@@ -161,7 +161,9 @@
       v-model="selectedFlavors"
       name="selected-flavors"
       hidden
-    ></textarea>
+    >
+      test
+    </textarea>
 
     <button
       type="submit"
