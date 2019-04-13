@@ -1,16 +1,13 @@
-/* eslint-disable */
-
 <template>
   <form
     name="degustation"
-    action="/"
+    action="/merci.html"
     method="post"
-    data-netlify="true"
+    netlify
     data-netlify-honeypot="bot-field"
     class="w-full max-w-md center"
   >
     <input type="hidden" name="form-name" value="degustation" />
-    <!-- action="/merci.html" -->
     <div class="flex flex-wrap -mx-3 mb-5 mt-4">
       <div class="w-full md:w-1/2 px-3 mb-5 md:mb-0">
         <label
@@ -159,6 +156,13 @@
       </div>
     </div>-->
 
+    <textarea
+      id="selected-flavors"
+      v-model="selectedFlavors"
+      name="selected-flavors"
+      hidden
+    ></textarea>
+
     <button
       type="submit"
       class="bg-purple mt-3 hover:bg-purple-dark text-white font-bold py-2 px-4 rounded-full"
@@ -173,6 +177,14 @@ import whiskyOrigin from '@/assets/data/whiskyOrigin.json'
 import whiskyType from '@/assets/data/whiskyType.json'
 
 export default {
+  props: {
+    selectedFlavors: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
   data() {
     return {
       userEmail: '',
@@ -184,8 +196,7 @@ export default {
       whiskyOriginOptions: whiskyOrigin,
       chosenFlavorsToSubmit: ['a', 'b', 'c']
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

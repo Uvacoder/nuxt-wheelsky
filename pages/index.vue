@@ -18,10 +18,17 @@
           @reset-depth="selectFlavor"
         ></flavor-details>
         <chosen-flavors :selected-flavors="selectedFlavors"></chosen-flavors>
+        <button
+          style="margin-top: 1em"
+          :class="{ transparent: selectedFlavors.length < 2 }"
+          @click="firstPhase = false"
+        >
+          Je finis ma sélection
+        </button>
       </div>
     </div>
     <div v-if="!firstPhase">
-      <user-form></user-form>
+      <user-form :selected-flavors="selectedFlavors"></user-form>
     </div>
   </div>
 </template>
@@ -32,7 +39,6 @@ import FlavorDetails from '@/components/FlavorDetails.vue'
 import ChosenFlavors from '@/components/ChosenFlavors.vue'
 import UserForm from '@/components/UserForm.vue'
 import whiskyFlavors from '@/assets/data/whiskyFlavors.json'
-let draggable
 
 export default {
   name: 'App',
@@ -68,10 +74,10 @@ export default {
       ],
       all: whiskyFlavors,
       highlightedFlavor: undefined,
-      selectedFlavors: [],
+      selectedFlavors: ['tabac', 'cancer'],
       previouslySelectedFlavor: undefined,
       depthTier: 1,
-      firstPhase: true,
+      firstPhase: false,
       activeFlavorArray: [
         {
           name: 'Doux'
@@ -114,13 +120,15 @@ export default {
   },
   mounted() {
     if (process.browser) {
-      draggable = require('gsap/Draggable')
       window.onbeforeunload = function() {
         // return 'Êtes-vous sûr de vouloir recharger la page ?'
       }
     }
   },
   methods: {
+    toggleFirstPhase() {
+      this.firstPhase = !this.firstPhase
+    },
     updateHighlightedFlavor(e) {
       this.highlightedFlavor = e.name
     },
@@ -162,7 +170,8 @@ export default {
         this.resetWheel()
         //!todo OMFG, what an MLG pro. kill me.
       }
-      this.$refs.wheel.checkFlavor(draggable.get('#wheel'))
+      const { Draggable } = require('gsap/Draggable')
+      this.$refs.wheel.checkFlavor(Draggable.get('#wheel'))
     },
     resetWheel() {
       this.depthTier = 1
@@ -210,9 +219,6 @@ export default {
 </script>
 
 <style lang="sass">
-*
-  box-sizing: content-box
-  // overflow: auto;
 body
   margin: 0
 #app
@@ -235,4 +241,6 @@ body
   flex: 1 0 0
   transform: translate3d(-25%, 0, 0)
   border: 3px solid yellow
+.transparent
+  opacity: 0
 </style>

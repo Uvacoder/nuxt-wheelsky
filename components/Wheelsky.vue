@@ -73,8 +73,6 @@
 </template>
 
 <script>
-let draggable
-
 export default {
   props: {
     availableFlavors: {
@@ -113,8 +111,8 @@ export default {
   watch: {
     availableFlavors(newValue, oldValue) {
       // console.log("Update chosen flavor after a depth dive");
-      draggable = require('gsap/Draggable')
-      this.checkFlavor(draggable.get('#wheel'))
+      const { Draggable } = require('gsap/Draggable')
+      this.checkFlavor(Draggable.get('#wheel'))
     }
   },
   mounted() {
@@ -139,6 +137,7 @@ export default {
         bounds: { minRotation: -10000, maxRotation: 10000 }
       })
       this.$nextTick(function() {
+        const { Draggable } = require('gsap/Draggable')
         this.checkFlavor(Draggable.get('#wheel'))
       })
     }

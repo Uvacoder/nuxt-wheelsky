@@ -1,6 +1,6 @@
 <template>
   <div class="chosen-flavors">
-    <p>Choosen flavors below</p>
+    <p>Saveurs choisies</p>
     <span v-for="flavor in flavors" :key="flavor.id">{{ flavor }}</span>
     <!-- <button class="btn btn-yellow">proceed further button !</button> -->
   </div>
