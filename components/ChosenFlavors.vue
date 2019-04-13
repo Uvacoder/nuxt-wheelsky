@@ -1,7 +1,12 @@
 <template>
   <div class="chosen-flavors">
-    <p>Saveurs choisies</p>
-    <span v-for="flavor in flavors" :key="flavor.id">{{ flavor }}</span>
+    <p class="font-semibold">Saveurs choisies</p>
+    <span
+      v-for="flavor in flavors"
+      :key="flavor.id"
+      :class="{ 'text-purple': selectedFlavors.length === 0 }"
+      >{{ flavor }}</span
+    >
     <!-- <button class="btn btn-yellow">proceed further button !</button> -->
   </div>
 </template>
@@ -17,7 +22,7 @@ export default {
   computed: {
     flavors() {
       if (this.selectedFlavors.length === 0) {
-        return ['Aucun parfum choisi pour le moment']
+        return ['Aucune pour le moment']
       } else {
         return this.selectedFlavors.join(', ')
       }
@@ -25,3 +30,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.chosen-flavors
+  text-align: center
+</style>

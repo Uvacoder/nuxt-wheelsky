@@ -14,7 +14,9 @@
         v-for="(flavor, index) in availableFlavors"
         :key="flavor.id"
         :d="drawCirclePath(degrePerArc * index, degrePerArc * (index + 1))"
-        fill="grey"
+        fill="#444"
+        stroke="#f2d024"
+        stroke-width="3"
       ></path>
       <g v-for="(flavor, index) in availableFlavors" :key="flavor.id">
         <path
@@ -110,15 +112,20 @@ export default {
   },
   watch: {
     availableFlavors(newValue, oldValue) {
-      // console.log("Update chosen flavor after a depth dive");
       const { Draggable } = require('gsap/Draggable')
       this.checkFlavor(Draggable.get('#wheel'))
     }
   },
   mounted() {
+    // if (process.env.dev) {
+    //   console.log('env id dev')
+    // } else if (process.end.production) {
+    //  console.log('end if PROD')
+    // todo: https://github.com/nuxt/nuxt.js/issues/1789
+    // }
     if (process.browser) {
       if (this.availableFlavors.length === 1) {
-        console.log('we should GSAP lock the rotation here !')
+        // console.log('we should GSAP lock the rotation here !')
       } else {
       }
       const vueInstance = this
@@ -237,5 +244,5 @@ export default {
   width: 30%
 .curved-text
   font-size: 3rem
-  border: 2px solid yellow
+  // border: 2px solid yellow
 </style>

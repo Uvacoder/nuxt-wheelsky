@@ -194,8 +194,7 @@ export default {
       whiskyType: '',
       whiskyTypeOptions: whiskyType,
       whiskyOrigin: '',
-      whiskyOriginOptions: whiskyOrigin,
-      chosenFlavorsToSubmit: ['a', 'b', 'c']
+      whiskyOriginOptions: whiskyOrigin
     }
   }
 }

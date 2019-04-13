@@ -1,7 +1,12 @@
 <template>
   <div class="details">
-    <p>{{ highlightedFlavor }}</p>
-    <button class="btn btn-yellow" @click="digFlavor">
+    <div>
+      <p class="text-lg">Parfum actuel: {{ highlightedFlavor }}</p>
+    </div>
+    <button
+      class="custom-button bg-transparent active:hover:bg-purple text-purple-dark font-semibold py-2 px-4 border border-purple rounded"
+      @click="digFlavor"
+    >
       {{ choisirSaveur }}
     </button>
   </div>
@@ -24,7 +29,7 @@ export default {
   computed: {
     choisirSaveur() {
       if (this.depthTier < 3) {
-        return 'Suivant'
+        return 'Continuer'
       } else {
         return 'Choisir cette saveur'
       }
@@ -33,7 +38,6 @@ export default {
   methods: {
     digFlavor() {
       if (this.depthTier === 3) {
-        console.log('We have a chosen flavor !')
         this.$emit('reset-depth', this.highlightedFlavor)
       } else {
         this.$emit('dig-flavor', this.highlightedFlavor)
@@ -48,4 +52,8 @@ export default {
   margin: 3em auto
   // border: solid 1px red
   // transform: translate3d(-25%, 0, 0)
+.custom-button
+  display: flex
+  margin: 0 auto
+  margin-top: 0.5em
 </style>

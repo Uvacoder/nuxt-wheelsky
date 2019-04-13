@@ -20,6 +20,7 @@
         <chosen-flavors :selected-flavors="selectedFlavors"></chosen-flavors>
         <button
           style="margin-top: 1em"
+          class="bg-purple mt-3 hover:bg-purple-dark text-white font-bold py-2 px-4 rounded-full"
           :class="{ transparent: selectedFlavors.length < 2 }"
           @click="firstPhase = false"
         >
@@ -144,11 +145,9 @@ export default {
         const elementsTier2 = this.all[0].children.find(el => el.name === e)
           .children
         for (let i = 0; i < elementsTier2.length; i++) {
-          console.log(elementsTier2[i])
           tempArray.push(elementsTier2[i])
           //!todo need to filter the N+1 to avoid printing parents w/ no children...
         }
-        console.log(elementsTier2)
         this.previouslySelectedFlavor = e
       } else if (this.depthTier === 3) {
         const elementsTier2 = this.all[0].children.find(
@@ -240,7 +239,7 @@ body
   flex-direction: column
   flex: 1 0 0
   transform: translate3d(-25%, 0, 0)
-  border: 3px solid yellow
+  // border: 3px solid yellow
 .transparent
   opacity: 0
 </style>
