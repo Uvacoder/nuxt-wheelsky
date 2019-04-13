@@ -74,10 +74,10 @@ export default {
       ],
       all: whiskyFlavors,
       highlightedFlavor: undefined,
-      selectedFlavors: ['tabac', 'cancer'],
+      selectedFlavors: [],
       previouslySelectedFlavor: undefined,
       depthTier: 1,
-      firstPhase: false,
+      firstPhase: true,
       activeFlavorArray: [
         {
           name: 'Doux'

@@ -156,14 +156,13 @@
       </div>
     </div>-->
 
+    <label for="selected-flavors" hidden>Saveurs choisies</label>
     <textarea
       id="selected-flavors"
       v-model="selectedFlavors"
       name="selected-flavors"
       hidden
-    >
-      test
-    </textarea>
+    ></textarea>
 
     <button
       type="submit"
